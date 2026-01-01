@@ -1,0 +1,31 @@
+class Solution {
+    public int subarraysWithKDistinct(int[] nums, int k) {
+        int n = nums.length;
+        int res = 0;
+
+        Map<Integer, Integer> freq1 = new HashMap<>();
+        Map<Integer, Integer> freq2 = new HashMap<>();
+
+        int l1 = 0, l2 = 0;
+
+        for (int r = 0; r < n; r++) {
+            freq1.put(nums[r], freq1.getOrDefault(nums[r], 0) + 1);
+            freq2.put(nums[r], freq2.getOrDefault(nums[r], 0) + 1);
+
+            while (freq1.size() > k) {
+                freq1.put(nums[l1], freq1.get(nums[l1]) - 1);
+                if (freq1.get(nums[l1]) == 0) freq1.remove(nums[l1]);
+                l1++;
+            }
+
+            while (freq2.size() >= k) {
+                freq2.put(nums[l2], freq2.get(nums[l2]) - 1);
+                if (freq2.get(nums[l2]) == 0) freq2.remove(nums[l2]);
+                l2++;
+            }
+
+            res += l2 - l1;
+        }
+        return res;
+    }
+}
