@@ -1,0 +1,29 @@
+class Solution {
+    public int characterReplacement(String s, int k) {
+        int n = s.length();
+        int r = 0, l = 0, max = 0, maxf = 0;
+        HashMap<Character, Integer> map = new HashMap<>();
+        
+        while(r < n){
+            map.put(s.charAt(r), map.getOrDefault(s.charAt(r), 0)+1);
+            for(int v: map.values()){
+                maxf = Math.max(maxf, v);
+            }
+            if((r-l+1)-maxf > k){
+                map.put(s.charAt(l), map.get(s.charAt(l))-1);
+                if(map.get(s.charAt(l)) == 0){
+                    map.remove(s.charAt(l));
+                }
+                l++;
+                for(int v: map.values()){
+                    maxf = Math.max(maxf, v);
+                }
+            }
+            if((r-l+1)-maxf <= k){
+                max = Math.max(max, r-l+1);
+            }
+            r++;
+        }
+        return max;
+    }
+}
