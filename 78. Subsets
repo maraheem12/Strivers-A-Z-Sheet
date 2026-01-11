@@ -1,0 +1,30 @@
+import java.util.*;
+
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        int n = nums.length;
+        generateSubsets(nums, 0, n, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void generateSubsets(int[] nums, int k, int n, List<Integer> current, List<List<Integer>> result) {
+        // Add the current subset to the result list
+        if(n==k){
+            result.add(new ArrayList<>(current));
+            return;
+        }
+       
+
+        // Iterate through the array
+       
+        // Include the current element
+        current.add(nums[k]);
+        // Recurse with the included element
+        generateSubsets(nums, k + 1, n, current, result);
+        // Remove the last element to backtrack
+        current.remove(current.size() - 1);
+        generateSubsets(nums, k + 1, n, current, result);
+        
+    }
+}
