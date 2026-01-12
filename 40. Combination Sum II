@@ -1,0 +1,24 @@
+class Solution {
+    public void generate(int[] a, int n, int target, List<List<Integer>> res, int i, int sum, List<Integer> curr) {
+
+        if (sum == target) {
+            res.add(new ArrayList<>(curr));
+            return;
+        }
+        if (i == n || sum > target) return;
+
+        for (int idx = i; idx < n; idx++) {
+            if (idx > i && a[idx] == a[idx - 1]) continue; // skip duplicates
+            curr.add(a[idx]);
+            generate(a, n, target, res, idx + 1, sum + a[idx], curr); // no reuse
+            curr.remove(curr.size() - 1);
+        }
+    }
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> res = new ArrayList<>();
+        generate(candidates, candidates.length, target, res, 0, 0, new ArrayList<>());
+        return res;
+    }
+}
